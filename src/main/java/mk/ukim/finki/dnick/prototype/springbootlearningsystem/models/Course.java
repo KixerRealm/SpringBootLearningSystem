@@ -18,8 +18,8 @@ public class Course {
 
     private String description;
 
-//    @ManyToOne
-//    private User user;
+    @ManyToOne
+    private User user;
 
     public Course(String name, String description) {
         this.name = name;

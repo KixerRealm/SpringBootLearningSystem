@@ -1,15 +1,15 @@
-package mk.ukim.finki.dnick.prototype.springbootlearningsystem.rest;
+package mk.ukim.finki.dnick.prototype.springbootlearningsystem.controller;
 
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.models.Course;
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.models.dto.CourseDto;
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.service.interfaces.CourseService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@Controller
 @RequestMapping("/lectures")
 public class CourseController {
     private final CourseService courseService;
