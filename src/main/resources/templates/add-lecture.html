@@ -1,0 +1,40 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">WEB PROGRAMMING SHOP</h1>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <form action="/lectures/add" method="POST">
+                    <input id="id" type="hidden" name="id" th:value="(${course} != null ? ${course.getId()} : '')">
+                    <div class="form-group">
+                        <label for="name">Lecture name</label>
+                        <input type="text"
+                               class="form-control"
+                               id="name"
+                               name="name"
+                               th:value="(${course} != null ? ${course.getName()} : '')"
+                               required
+                               placeholder="Enter lecture name">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Lecture Description</label>
+                        <input type="text"
+                               class="form-control"
+                               id="description"
+                               name="description"
+                               th:value="(${course} != null ? ${course.getDescription()} : '')"
+                               placeholder="Description">
+                    </div>
+                    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                    <a type="button" class="btn btn-primary" href="/lectures">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</th:block>

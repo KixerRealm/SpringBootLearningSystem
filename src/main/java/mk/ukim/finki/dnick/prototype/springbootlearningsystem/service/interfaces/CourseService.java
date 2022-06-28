@@ -10,12 +10,11 @@ import java.util.Optional;
 public interface CourseService {
 
     List<Course> listAll();
+    Optional<Course> save(String name, String description);
 
-    Optional<Course> save(CourseDto courseDto);
+    Optional<Course> edit(Long id, String name, String description);
 
-    Optional<Course> edit(String courseId, CourseDto courseDto);
+    void deleteById(Long id);
 
-    void deleteById(String id);
-
-    Optional<Course> findById(String id);
+    Optional<Course> findById(Long id);
 }

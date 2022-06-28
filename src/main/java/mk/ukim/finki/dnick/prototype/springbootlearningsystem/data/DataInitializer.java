@@ -28,8 +28,12 @@ public class DataInitializer {
 
     @PostConstruct
     public void init(){
-        this.courseService.save(new CourseDto("Course1", "Course  1 1 1 "));
+        this.courseService.save("Java", "In this lecture you will learn the basics of the programming language Java needed for the rest of the course.");
+        this.courseService.save("OOP in Java", " In this lecture you will learn the OOP concepts in the programming language Java needed for the rest of the course.");
+        this.courseService.save("Introduction to Spring", "In this lecture you will learn the basics of Spring framework.");
+        this.courseService.save("Spring Factory", "In this lecture you will learn the concepts of Spring Beans and Spring Factory.");
         this.userService.register("professor1","professor1","professor1","Adam","Adamovski", Role.ROLE_ADMIN);
+        this.userService.register("user","user","user","John","Adamovski", Role.ROLE_USER);
         //users.add(new User("riste.stojanov","rs","Riste","Stojanov"));
         //users.add(new User("ana.todorovska","at","Ana","Todorovska"));
     }

@@ -11,11 +11,12 @@ import java.util.Objects;
 @Table(name = "courses")
 public class Course {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long courseId;
+    @GeneratedValue
+    private Long id;
 
     private String name;
 
+    @Column(length = 255)
     private String description;
 
     @ManyToOne
@@ -33,11 +34,11 @@ public class Course {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Course course = (Course) o;
-        return courseId.equals(course.courseId);
+        return id.equals(course.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(courseId);
+        return Objects.hash(id);
     }
 }

@@ -24,34 +24,34 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> listAll() {
-        return courseRepository.findAll().stream().distinct().collect(Collectors.toList());
+        return courseRepository.findAll();
     }
 
     @Override
     @Transactional
-    public Optional<Course> save(CourseDto courseDto) {
-        this.courseRepository.deleteByName(courseDto.getName());
-        Course course = new Course(courseDto.getName(), courseDto.getDescription());
+    public Optional<Course> save(String name, String description) {
+        Course course = new Course(name,description);
         this.courseRepository.save(course);
         return Optional.of(course);
     }
 
     @Override
-    public Optional<Course> edit(String id, CourseDto productDto) {
+    public Optional<Course> edit(Long id, String name, String description) {
         Course course = this.courseRepository.findById(id).orElseThrow(CourseDoesNotExistException::new);
-        course.setName(productDto.getName());
-        course.setDescription(productDto.getDescription());
+        course.setName(name);
+        course.setDescription(description);
         this.courseRepository.save(course);
         return Optional.of(course);
     }
 
+
     @Override
-    public void deleteById(String id) {
+    public void deleteById(Long id) {
         this.courseRepository.deleteById(id);
     }
 
     @Override
-    public Optional<Course> findById(String id) {
+    public Optional<Course> findById(Long id) {
         return courseRepository.findById(id);
     }
 }
