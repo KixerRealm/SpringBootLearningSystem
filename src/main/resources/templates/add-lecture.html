@@ -1,10 +1,9 @@
 <th:block xmlns:th="http://www.thymeleaf.org">
     <section class="jumbotron text-center">
         <div class="container">
-            <h1 class="jumbotron-heading">WEB PROGRAMMING SHOP</h1>
+            <h1 class="jumbotron-heading">WEB PROGRAMMING COURSE</h1>
         </div>
     </section>
-
     <div class="container">
         <div class="row">
             <div class="col-md-5">
@@ -29,12 +28,18 @@
                                th:value="(${course} != null ? ${course.getDescription()} : '')"
                                placeholder="Description">
                     </div>
+                    <div class="form-group">
+                        <label for="content">Lecture Content</label>
+                        <textarea class="form-control"
+                        id="content"
+                        name="content"
+                        th:value="(${course} != null ? ${course.getContent()} : '')"
+                        placeholder="Content"></textarea>
+                    </div>
                     <button id="submit" type="submit" class="btn btn-primary">Submit</button>
                     <a type="button" class="btn btn-primary" href="/lectures">Back</a>
                 </form>
             </div>
         </div>
     </div>
-
-
 </th:block>

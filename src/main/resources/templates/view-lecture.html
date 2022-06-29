@@ -1,0 +1,14 @@
+<div xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading">WELCOME TO THE WEB PROGRAMMING COURSE</h1>
+    </div>
+  </section>
+  <div class="container mb-4">
+    <h3 th:text="${course.getId()} + '. ' + ${course.getName()}"></h3>
+    <p th:text="${course.getContent()}"></p>
+    <a type="button" class="btn btn-primary" href="/lectures">Back to lectures</a>
+    <a type="button" class="btn btn-primary" href="#">Join lecture</a>
+    <a type="button" class="btn btn-primary" href="#">Open lecture recording</a>
+  </div>
+</div>
