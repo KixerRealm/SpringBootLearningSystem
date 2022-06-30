@@ -12,7 +12,9 @@
                 <div th:each="course : ${courses}" class="course container-fluid">
                     <div class="card border-1">
                        <img th:if="${course.getName().contains('Java')}" src="/images/java_logo_icon.png" class="card-img-top">
-                       <img th:if="${course.getName().contains('Spring')}" src="/images/Spring-BOOT-Interview-questions-1.jpg" class="card-img-top">
+                        <img th:if="${course.getName().contains('Introduction to Spring')}" src="/images/Spring-BOOT-Interview-questions-1.jpg" class="card-img-top">
+                        <img th:if="${course.getName().contains('Beans')}" src="/images/Spring-Bean.PNG" class="card-img-top">
+                        <img th:if="${course.getName().contains('Spring Factory')}" src="/images/Spring-Factory.jpg" class="card-img-top">
                     <div class="card-body">
                             <h3 class="card-title" th:text="${course.getId()} + '. ' + ${course.getName()}"></h3>
                             <p class="card-text pt-2" th:text="${course.getDescription()}"></p>

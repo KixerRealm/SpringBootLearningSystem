@@ -32,10 +32,10 @@ public class DataInitializer {
                 "\n" +
                 "Object-oriented programming has several advantages over procedural programming:\n" +
                 "\n" +
-                "OOP is faster and easier to execute\n" +
-                "OOP provides a clear structure for the programs\n" +
-                "OOP helps to keep the Java code DRY \"Don't Repeat Yourself\", and makes the code easier to maintain, modify and debug\n" +
-                "OOP makes it possible to create full reusable applications with less code and shorter development time");
+                "   •OOP is faster and easier to execute\n" +
+                "   •OOP provides a clear structure for the programs\n" +
+                "   •OOP helps to keep the Java code DRY \"Don't Repeat Yourself\", and makes the code easier to maintain, modify and debug\n" +
+                "   •OOP makes it possible to create full reusable applications with less code and shorter development time");
         this.courseService.save("Introduction to Spring", "In this lecture you will learn the basics of Spring framework.","This spring tutorial provides in-depth concepts of Spring Framework with simplified examples. It was developed by Rod Johnson in 2003. Spring framework makes the easy development of JavaEE application.\n" +
                 "\n" +
                 "It is helpful for beginners and experienced persons.\n" +
@@ -49,27 +49,72 @@ public class DataInitializer {
                 "These are the design patterns that are used to remove dependency from the programming code. They make the code easier to test and maintain. Let's understand this with the following code:\n" +
                 "\n" +
                 "class Employee{  \n" +
-                "Address address;  \n" +
-                "Employee(){  \n" +
-                "address=new Address();  \n" +
-                "}  \n" +
+                "   Address address;  \n" +
+                "   Employee(){  \n" +
+                "       address=new Address();  \n" +
+                "   }  \n" +
                 "}  \n" +
                 "In such case, there is dependency between the Employee and Address (tight coupling). In the Inversion of Control scenario, we do this something like this:\n" +
                 "\n" +
                 "class Employee{  \n" +
-                "Address address;  \n" +
-                "Employee(Address address){  \n" +
-                "this.address=address;  \n" +
-                "}  \n" +
+                "   Address address;  \n" +
+                "   Employee(Address address){  \n" +
+                "       this.address=address;  \n" +
+                "   }  \n" +
                 "}  \n" +
                 "Thus, IOC makes the code loosely coupled. In such case, there is no need to modify the code if our logic is moved to new environment.\n" +
                 "\n" +
                 "In Spring framework, IOC container is responsible to inject the dependency. We provide metadata to the IOC container either by XML file or annotation.\n" +
                 "\n" +
-                "Advantage of Dependency Injection\n" +
-                "makes the code loosely coupled so easy to maintain\n" +
-                "makes the code easy to test");
-        this.courseService.save("Spring Factory", "In this lecture you will learn the concepts of Spring Beans and Spring Factory.", "There are two kinds of beans in the Spring bean container: ordinary beans and factory beans. Spring uses the former directly, whereas latter can produce objects themselves, which are managed by the framework.\n" +
+                "Advantage of Dependency Injection:\n" +
+                "   - makes the code loosely coupled so easy to maintain\n" +
+                "   - makes the code easy to test");
+        this.courseService.save("Spring Beans", "In this lecture you will learn the concepts of Spring Beans",
+                "1. Overview\n" +
+                "Bean is a key concept of the Spring Framework. So understanding this notion is crucial to get the hang of the framework and use it in an effective way.\n" +
+                "\n" +
+                "Unfortunately, there aren't clear answers to the simple question of what a Spring bean really is. Some explanations go to such a low level that the big picture is missed, whereas others are too vague.\n" +
+                "\n" +
+                "This tutorial will try to shed light on the topic, starting with a description in the official documentation." +
+                "\n" +
+                "2. Bean Definition\n" +
+                "Here's a definition of beans in the Spring Framework documentation:\n" +
+                "\n" +
+                "In Spring, the objects that form the backbone of your application and that are managed by the Spring IoC container are called beans. A bean is an object that is instantiated, assembled, and otherwise managed by a Spring IoC container." +
+                "\n" +
+                "This definition is concise and gets to the point but fails to elaborate on an important element: the Spring IoC container. Let's take a closer look to see what it is and the benefits it brings in." +
+                "\n" +
+                "3. Inversion of Control\n" +
+                "Simply put, Inversion of Control (IoC) is a process in which an object defines its dependencies without creating them. This object delegates the job of constructing such dependencies to an IoC container.\n" +
+                "\n" +
+                "Let's start with the declaration of a couple of domain classes before diving into IoC.\n" +
+                "\n" +
+                "3.1. Domain Classes\n" +
+                "Assume we have a class declaration:\n" +
+                "\n" +
+                "public class Company {\n" +
+                "    private Address address;\n" +
+                "\n" +
+                "    public Company(Address address) {\n" +
+                "        this.address = address;\n" +
+                "    }\n" +
+                "\n" +
+                "    // getter, setter and other properties\n" +
+                "}\n" +
+                "This class needs a collaborator of type Address:\n" +
+                "public class Address {\n" +
+                "    private String street;\n" +
+                "    private int number;\n" +
+                "\n" +
+                "    public Address(String street, int number) {\n" +
+                "        this.street = street;\n" +
+                "        this.number = number;\n" +
+                "    }\n" +
+                "\n" +
+                "    // getters and setters\n" +
+                "}"
+                );
+        this.courseService.save("Spring Factory", "In this lecture you will learn the concepts of Spring Factory.", "There are two kinds of beans in the Spring bean container: ordinary beans and factory beans. Spring uses the former directly, whereas latter can produce objects themselves, which are managed by the framework.\n" +
                 "\n" +
                 "And, simply put, we can build a factory bean by implementing org.springframework.beans.factory.FactoryBean interface.Let's look at the FactoryBean interface first:\n" +
                 "\n" +
@@ -80,10 +125,9 @@ public class DataInitializer {
                 "}\n" +
                 "Let's discuss the three methods:\n" +
                 "\n" +
-                "getObject() – returns an object produced by the factory, and this is the object that will be used by Spring container\n" +
-                "getObjectType() – returns the type of object that this FactoryBean produces\n" +
-                "isSingleton() – denotes if the object produced by this FactoryBean is a singleton\n" +
-                "Now, let's implement an example FactoryBean. We'll implement a ToolFactory which produces objects of the type Tool:");
+                "   •getObject() – returns an object produced by the factory, and this is the object that will be used by Spring container\n" +
+                "   •getObjectType() – returns the type of object that this FactoryBean produces\n" +
+                "   •isSingleton() – denotes if the object produced by this FactoryBean is a singleton\n");
         this.userService.register("admin","admin","admin","Adam","Adamovski", Role.ROLE_ADMIN);
         this.userService.register("user","user","user","John","Adamovski", Role.ROLE_USER);
     }
