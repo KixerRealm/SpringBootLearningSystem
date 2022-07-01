@@ -37,6 +37,7 @@ public class CourseController {
     public String viewLecturePage(@PathVariable Long id, Model model){
         Course course = this.courseService.findById(id).orElseThrow(CourseDoesNotExistException::new);
         model.addAttribute("course", course);
+        model.addAttribute("courses", this.courseService.listAll());
         model.addAttribute("bodyContent","view-lecture");
         return "master-template";
     }
