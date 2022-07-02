@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Profile("stateful-auth")
 @Configuration
@@ -15,12 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final PasswordEncoder passwordEncoder;
     private final CustomUsernamePasswordAuthenticationProvider authenticationProvider;
 
-    public WebSecurityConfig(PasswordEncoder passwordEncoder,
-                             CustomUsernamePasswordAuthenticationProvider authenticationProvider) {
-        this.passwordEncoder = passwordEncoder;
+    public WebSecurityConfig(CustomUsernamePasswordAuthenticationProvider authenticationProvider) {
         this.authenticationProvider = authenticationProvider;
     }
 
@@ -29,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/api/**","/lectures", "/login", "/register", "/home", "/images/**").permitAll()
+                .antMatchers("/", "/api/**","/lectures", "/login", "/register", "/home", "/images/**", "/css/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
@@ -52,15 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//                .withUser("kiko")
-//                .password(passwordEncoder.encode("kiko"))
-//                .authorities("ROLE_USER")
-//                .and()
-//                .withUser("professor1")
-//                .password(passwordEncoder.encode("professor1"))
-//                .authorities("ROLE_ADMIN");
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider);
     }
 

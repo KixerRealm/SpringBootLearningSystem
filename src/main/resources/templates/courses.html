@@ -19,7 +19,7 @@
                             <h3 class="card-title" th:text="${course.getId()} + '. ' + ${course.getName()}"></h3>
                             <p class="card-text pt-2" th:text="${course.getDescription()}"></p>
                             <a th:href="@{'/lectures/view-lecture/{id}' (id=${course.getId()})}"
-                               class="btn btn-sm btn-info edit-lecture">
+                               class="btn btn-sm btn-info view-lecture">
                                 <i class="fa fa-trash">View lecture</i></a>
                         <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                             <form th:action="@{'/lectures/delete/{id}' (id=${course.getId()})}"

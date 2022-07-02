@@ -1,25 +1,4 @@
-<!--<script>-->
-<!--  var btnContainer = document.getElementById("mySidenav");-->
-
-<!--  // Get all buttons with class="btn" inside the container-->
-<!--  var btns = btnContainer.getElementsByClassName("btn");-->
-
-<!--  // Loop through the buttons and add the active class to the current/clicked button-->
-<!--  for (var i = 0; i < btns.length; i++) {-->
-<!--    btns[i].addEventListener("click", function() {-->
-<!--      var current = document.getElementsByClassName("active");-->
-
-<!--      // If there's no active class-->
-<!--      if (current.length > 0) {-->
-<!--        current[0].className = current[0].className.replace(" active", "");-->
-<!--      }-->
-
-<!--      // Add the active class to the current/clicked button-->
-<!--      this.className += " active";-->
-<!--    });-->
-<!--  }-->
-<!--</script>-->
-<div xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<div xmlns:th="http://www.thymeleaf.org">
   <section class="jumbotron text-center">
     <div class="container">
       <h1 class="jumbotron-heading">WELCOME TO THE WEB PROGRAMMING COURSE</h1>
@@ -41,9 +20,9 @@
     <a type="button" class="btn btn-primary" href="#">Open lecture recording</a>
   </div>
   <div id="mySidenav" class="sidenav text-white">
-    <div th:each="course : ${courses}" class="">
+    <div th:each="course : ${courses}">
       <a th:href="@{'/lectures/view-lecture/{id}' (id=${course.getId()})}" th:text="${course.getId()} + '. ' + ${course.getName()}">
-        <i class=""></i></a>
+        <i></i></a>
     </div>
   </div>
 </div>
