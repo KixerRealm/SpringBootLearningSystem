@@ -1,12 +1,17 @@
 package mk.ukim.finki.dnick.prototype.springbootlearningsystem.data;
 
 import lombok.Getter;
+import mk.ukim.finki.dnick.prototype.springbootlearningsystem.models.Question;
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.models.enumerations.Role;
+import mk.ukim.finki.dnick.prototype.springbootlearningsystem.repository.QuestionRepository;
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.service.interfaces.CourseService;
+import mk.ukim.finki.dnick.prototype.springbootlearningsystem.service.interfaces.QuizService;
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.service.interfaces.UserService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Getter
@@ -14,10 +19,15 @@ public class DataInitializer {
 
     public UserService userService;
     public CourseService courseService;
+    public QuizService quizService;
+    public QuestionRepository questionRepository;
 
-    public DataInitializer(CourseService courseService, UserService userService) {
+    public DataInitializer(CourseService courseService, UserService userService,
+                           QuizService quizService, QuestionRepository questionRepository) {
         this.userService = userService;
         this.courseService = courseService;
+        this.quizService = quizService;
+        this.questionRepository = questionRepository;
     }
 
     @PostConstruct
@@ -130,6 +140,21 @@ public class DataInitializer {
                 "   •isSingleton() – denotes if the object produced by this FactoryBean is a singleton\n");
         this.userService.register("admin","admin","admin","Adam","Adamovski", Role.ROLE_ADMIN);
         this.userService.register("user","user","user","John","Adamovski", Role.ROLE_USER);
+
+
+        Question question = new Question("What is a correct syntax to output \"Hello World\" in Java?", "echo \"Hello World\"",
+                "printf(\"Hello World\")", "System.out.println(\"Hello World\")", 3, -1);
+        this.questionRepository.save(question);
+        Question question1 = new Question("Java is short for \"JavaScript.\"", "True", "False", "Partially True", 2, -1);
+        this.questionRepository.save(question1);
+        Question question2 = new Question("How do you insert COMMENTS in Java code?", "# This is a comment", "// This is a comment", "/* This is a comment", 2, -1);
+        this.questionRepository.save(question2);
+        Question question3 = new Question("Which data type is used to create a variable that should store text?", "String", "Char", "Both", 1, -1);
+        this.questionRepository.save(question3);
+        Question question4 = new Question("How do you create a variable with the numeric value 5?", "num x = 5", "float x = 5", "int x = 5", 3, -1);
+        this.questionRepository.save(question4);
+
+        this.quizService.save("Introduction to Java Quiz", question, question1, question2, question3, question4);
     }
 
 

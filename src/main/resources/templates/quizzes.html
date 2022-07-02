@@ -1,0 +1,53 @@
+<div xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading">WELCOME TO THE WEB PROGRAMMING COURSE</h1>
+    </div>
+  </section>
+  <div class="container mb-4">
+    <div class="row">
+      <div class="col-12" th:if="${quizzes.size() > 0}">
+        <h3 class="">Quizzes</h3>
+        <hr/>
+        <div th:each="quiz : ${quizzes}" class="quiz container-fluid">
+          <div class="card border-1">
+            <img th:if="${quiz.getQuizName().contains('Java')}" src="/images/java_logo_icon.png" class="card-img-top">
+            <img th:if="${quiz.getQuizName().contains('Introduction to Spring')}" src="/images/Spring-BOOT-Interview-questions-1.jpg" class="card-img-top">
+            <img th:if="${quiz.getQuizName().contains('Beans')}" src="/images/Spring-Bean.PNG" class="card-img-top">
+            <img th:if="${quiz.getQuizName().contains('Spring Factory')}" src="/images/Spring-Factory.jpg" class="card-img-top">
+            <div class="card-body">
+              <h3 class="card-title" th:text="${quiz.getId()} + '. ' + ${quiz.getQuizName()}"></h3>
+              <a th:href="@{'/quizzes/open-quiz/{id}' (id=${quiz.getId()})}"
+                 class="btn btn-sm btn-info open-quiz">
+                <i class="fa fa-trash">Attempt quiz</i></a>
+              <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                <form th:action="@{'/quizzes/delete/{id}' (id=${quiz.getId()})}"
+                      th:method="DELETE">
+                  <button type="submit"
+                          class="btn btn-sm btn-danger delete-quiz">
+                    <i class="fa fa-trash">Delete quiz</i>
+                  </button>
+                </form>
+              </th:block>
+<!--              <th:block sec:authorize="hasRole('ROLE_ADMIN')">-->
+<!--                <a th:href="@{'/quizzes/edit-form/{id}' (id=${quiz.getId()})}"-->
+<!--                   class="btn btn-sm btn-info edit-quiz">-->
+<!--                  <i class="fa fa-trash">Edit quiz</i>-->
+<!--                </a>-->
+<!--              </th:block>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<!--    <div class="col mb-3">-->
+<!--      <div class="row">-->
+<!--        <div class="col-sm-12 col-md-12" sec:authorize="hasRole('ROLE_ADMIN')">-->
+<!--          <a href="/quizzes/add-form" class="btn btn-block btn-dark add-lecture-btn">-->
+<!--            Add new quiz-->
+<!--          </a>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+  </div>
+</div>
