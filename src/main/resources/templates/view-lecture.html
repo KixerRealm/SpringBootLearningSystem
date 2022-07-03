@@ -18,6 +18,11 @@
     <a type="button" class="btn btn-primary" href="/lectures">Back to lectures</a>
     <a type="button" class="btn btn-primary" href="#">Join lecture</a>
     <a type="button" class="btn btn-primary" href="#">Open lecture recording</a>
+    <br/>
+    <div th:each="quiz : ${quizzes}">
+      <a  type="button" class="btn btn-primary" th:if="${quiz.getQuizName().contains(course.getName())}" th:href="@{'/quizzes/open-quiz/{id}' (id=${quiz.getId()})}">
+        Open lecture quiz</a>
+    </div>
   </div>
   <div id="mySidenav" class="sidenav text-white">
     <div th:each="course : ${courses}">

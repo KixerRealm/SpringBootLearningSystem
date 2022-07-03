@@ -1,30 +1,48 @@
+<script type="text/javascript">
+  // Timer
+  var mins = 0.2;  //Set the number of minutes you need
+  var secs = mins * 60;
+  var currentSeconds = 0;
+  var currentMinutes = 0;
+  /*
+   * The following line has been commented out due to a suggestion left in the comments. The line below it has not been tested.
+   * setTimeout('Decrement()',1000);
+   */
+  setTimeout(Decrement,1000);
+
+  function Decrement() {
+    currentMinutes = Math.floor(secs / 60);
+    currentSeconds = secs % 60;
+    if(currentSeconds <= 9) currentSeconds = "0" + currentSeconds;
+    secs--;
+    document.getElementById("time").innerHTML = currentMinutes + ":" + currentSeconds; //Set the element id you need the time put into.
+    if(secs !== -1) setTimeout('Decrement()',1000);
+    if(secs < 0) $("#submit").click()
+  }
+</script>
+
 <div class="container py-5 px-4">
-  <h1 class="bg-danger text-light">Only Select The Correct Answers</h1>
-
-  <form action="submit" method="POST" th:object=${qForm}>
-    <div class="ques-box bg-dark text-light" th:each="ques, i: ${qForm.questions}">
-      <p class="title" th:text="${ques.title}"></p>
-
+  <h1 class="jumbotron-fluid">Only Select The Correct Answers</h1>
+  <div>Time remaining until you can complete this quiz: <strong><span id="time"></span></strong></div>
+  <form action="/quizzes/submit" method="POST" th:object=${qForm}>
+    <div class="ques-box bg-success font-weight-bold" th:each="ques, i: ${qForm.questions}">
+        <p class="title" th:text="${ques.questionText}"></p>
       <div class="option">
         <input type="radio" th:name="|questions[${i.index}].chose|" th:value="1" />
         <p th:text="${ques.optionA}"></p>
       </div>
-
       <div class="option">
         <input type="radio" th:name="|questions[${i.index}].chose|" th:value="2" />
         <p th:text="${ques.optionB}"></p>
       </div>
-
       <div class="option">
         <input type="radio" th:name="|questions[${i.index}].chose|" th:value="3" />
         <p th:text="${ques.optionC}"></p>
       </div>
-
-      <input type="hidden" th:name="|questions[${i.index}].quesId|" th:value="${ques.quesId}" />
-      <input type="hidden" th:name="|questions[${i.index}].title|" th:value="${ques.title}" />
+      <input type="hidden" th:name="|questions[${i.index}].quesId|" th:value="${ques.id}" />
+      <input type="hidden" th:name="|questions[${i.index}].title|" th:value="${ques.questionText}" />
       <input type="hidden" th:name="|questions[${i.index}].ans|" th:value="${ques.ans}" />
     </div>
-
-    <button type="submit" class="btn btn-danger d-block mx-auto mt-4">Submit Answer</button>
+    <button id="submit" type="submit" class="btn btn-danger d-block mx-auto mt-4">Submit Answer</button>
   </form>
 </div>

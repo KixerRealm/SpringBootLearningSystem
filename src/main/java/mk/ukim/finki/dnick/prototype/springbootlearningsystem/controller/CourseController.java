@@ -1,8 +1,10 @@
 package mk.ukim.finki.dnick.prototype.springbootlearningsystem.controller;
 
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.models.Course;
+import mk.ukim.finki.dnick.prototype.springbootlearningsystem.models.Quiz;
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.models.exceptions.CourseDoesNotExistException;
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.service.interfaces.CourseService;
+import mk.ukim.finki.dnick.prototype.springbootlearningsystem.service.interfaces.QuizService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +16,11 @@ import java.util.List;
 @RequestMapping("/lectures")
 public class CourseController {
     private final CourseService courseService;
+    private final QuizService quizService;
 
-    public CourseController(CourseService courseService) {
+    public CourseController(CourseService courseService, QuizService quizService) {
         this.courseService = courseService;
+        this.quizService = quizService;
     }
 
     @GetMapping
@@ -38,6 +42,8 @@ public class CourseController {
         Course course = this.courseService.findById(id).orElseThrow(CourseDoesNotExistException::new);
         model.addAttribute("course", course);
         model.addAttribute("courses", this.courseService.listAll());
+        List<Quiz> quizzes = this.quizService.listAll();
+        model.addAttribute("quizzes", quizzes);
         model.addAttribute("bodyContent","view-lecture");
         return "master-template";
     }

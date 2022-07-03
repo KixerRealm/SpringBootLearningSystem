@@ -1,22 +1,38 @@
 package mk.ukim.finki.dnick.prototype.springbootlearningsystem.service.implementation;
 
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.models.Question;
+import mk.ukim.finki.dnick.prototype.springbootlearningsystem.models.QuestionForm;
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.models.Quiz;
+import mk.ukim.finki.dnick.prototype.springbootlearningsystem.models.Result;
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.models.exceptions.QuizDoesNotExistException;
+import mk.ukim.finki.dnick.prototype.springbootlearningsystem.repository.QuestionRepository;
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.repository.QuizRepository;
+import mk.ukim.finki.dnick.prototype.springbootlearningsystem.repository.ResultRepository;
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.service.interfaces.QuizService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class QuizServiceImpl implements QuizService {
 
     private final QuizRepository quizRepository;
+    private final ResultRepository resultRepository;
+    private final QuestionRepository questionRepository;
 
-    public QuizServiceImpl(QuizRepository quizRepository) {
+    @Autowired
+    Question question;
+    @Autowired
+    QuestionForm qForm;
+
+    public QuizServiceImpl(QuizRepository quizRepository, ResultRepository resultRepository, QuestionRepository questionRepository) {
         this.quizRepository = quizRepository;
+        this.resultRepository = resultRepository;
+        this.questionRepository = questionRepository;
     }
 
     @Override
@@ -25,17 +41,16 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-public Optional<Quiz> save(String quizText, Question question1, Question question2,Question question3, Question question4, Question question5) {
-        Quiz quiz = new Quiz(quizText, question1, question2, question3, question4, question5);
+public Optional<Quiz> save(String quizText) {
+        Quiz quiz = new Quiz(quizText);
         this.quizRepository.save(quiz);
         return Optional.of(quiz);
     }
 
     @Override
-    public Optional<Quiz> edit(Long id, String quizName, List<Question> questions) {
+    public Optional<Quiz> edit(Long id, String quizName) {
         Quiz quiz = this.quizRepository.findById(id).orElseThrow(QuizDoesNotExistException::new);
         quiz.setQuizName(quizName);
-        //quiz.setQuestions(questions);
         this.quizRepository.save(quiz);
         return Optional.of(quiz);
     }
@@ -49,4 +64,40 @@ public Optional<Quiz> save(String quizText, Question question1, Question questio
     public Optional<Quiz> findById(Long id) {
         return Optional.of(this.quizRepository.findById(id).orElseThrow(QuizDoesNotExistException::new));
     }
+
+    public QuestionForm getQuestions() {
+        List<Question> allQues = questionRepository.findAll();
+        List<Question> qList = new ArrayList<Question>();
+
+        Random random = new Random();
+
+        for(int i=0; i<5; i++) {
+            int rand = random.nextInt(allQues.size());
+            qList.add(allQues.get(rand));
+            allQues.remove(rand);
+        }
+
+        qForm.setQuestions(qList);
+
+        return qForm;
+    }
+
+    public int getResult(QuestionForm qForm) {
+        int correct = 0;
+
+        for(Question q: qForm.getQuestions())
+            if(q.getAns() == q.getChose())
+                correct++;
+
+        return correct;
+    }
+
+    public void saveScore(Result result) {
+        Result saveResult = new Result();
+        saveResult.setUsername(result.getUsername());
+        saveResult.setTotalCorrect(result.getTotalCorrect());
+        resultRepository.save(saveResult);
+    }
+
+
 }

@@ -1,0 +1,28 @@
+<div class="container">
+    <h3 class="bg-success text-center">Your Score</h3> <br/>
+<div class="row">
+    <div class=" justify-content-center">
+      <p>Participant name:</p>
+      <p th:if="${result}" th:text="${result.username}"></p>
+    </div>
+</div>
+<div class="row">
+    <div class=" justify-content-center">
+      <p>Total correct answers:<p th:if="${result}" th:text="${result.totalCorrect}"></p></p>
+    </div>
+</div>
+<div class="row">
+    <div class=" justify-content-center">
+      <p>Total false answers:</p>
+      <p th:if="${result}" th:text="5 - ${result.totalCorrect}"></p>
+    </div>
+</div>
+<div class="row">
+    <div class="justify-content-center mt-4">
+      <button type="button" th:onclick="window.location.href='/score'"
+              class="btn btn-primary">View Score Board</button>
+      <button type="button" th:onclick="window.location.href='/quizzes'"
+              class="btn btn-primary">Back to Quizzes</button>
+    </div>
+</div>
+</div>

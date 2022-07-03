@@ -3,6 +3,7 @@ package mk.ukim.finki.dnick.prototype.springbootlearningsystem.models;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Component
 public class Question {
 
     @Id

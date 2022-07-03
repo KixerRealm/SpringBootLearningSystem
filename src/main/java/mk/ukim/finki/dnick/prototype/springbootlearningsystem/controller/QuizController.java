@@ -4,9 +4,13 @@ import mk.ukim.finki.dnick.prototype.springbootlearningsystem.models.QuestionFor
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.models.Quiz;
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.models.Result;
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.models.exceptions.QuizDoesNotExistException;
+import mk.ukim.finki.dnick.prototype.springbootlearningsystem.repository.ResultRepository;
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.service.interfaces.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +22,7 @@ import java.util.List;
 public class QuizController {
 
     private final QuizService quizService;
+    private final ResultRepository resultRepository;
 
     @Autowired
     Result result;
@@ -28,8 +33,9 @@ public class QuizController {
         return result;
     }
 
-    public QuizController(QuizService quizService) {
+    public QuizController(QuizService quizService, ResultRepository resultRepository) {
         this.quizService = quizService;
+        this.resultRepository = resultRepository;
     }
 
     @GetMapping
@@ -48,8 +54,15 @@ public class QuizController {
     @GetMapping("/open-quiz/{id}")
     @PreAuthorize("isAuthenticated()")
     public String openQuizPage(@PathVariable Long id, Model model){
-        Quiz quiz = this.quizService.findById(id).orElseThrow(QuizDoesNotExistException::new);
-        model.addAttribute("quiz", quiz);
+        this.quizService.findById(id).orElseThrow(QuizDoesNotExistException::new).setQuestions(quizService.getQuestions().getQuestions());
+        QuestionForm qForm = quizService.getQuestions();
+        submitted = false;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String username = authentication.getName();
+            result.setUsername(username);
+        }
+        model.addAttribute("qForm", qForm);
         model.addAttribute("bodyContent","open-quiz");
         return "master-template";
     }
@@ -65,38 +78,38 @@ public class QuizController {
     @PostMapping("/submit")
     public String submitQuiz(@ModelAttribute QuestionForm qForm, Model m){
         if(!submitted) {
-            //result.setTotalCorrect(qService.getResult(qForm));
-            //qService.saveScore(result);
+            result.setTotalCorrect(quizService.getResult(qForm));
+            quizService.saveScore(result);
             submitted = true;
         }
-        return " ";
+        m.addAttribute("result",result);
+        m.addAttribute("bodyContent", "result");
+        return "master-template";
     }
-//
-//    @PostMapping("/add")
-//    public String saveQuiz(
-//            @RequestParam(required = false) Long id,
-//            @RequestParam String name,
-//            @RequestParam String description,
-//            @RequestParam String content) {
-//        if (id != null) {
-//            this.courseService.edit(id, name, description, content);
-//        } else {
-//            this.courseService.save(name, description, content);
-//        }
-//        return "redirect:/lectures";
-//    }
-//
-//    @GetMapping("/edit-form/{id}")
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    public String editCoursePage(@PathVariable Long id, Model model) {
-//        if (this.courseService.findById(id).isPresent()) {
-//            Course course = this.courseService.findById(id).orElseThrow(CourseDoesNotExistException::new);
-//            model.addAttribute("course", course);
-//            model.addAttribute("bodyContent", "add-lecture");
-//            return "master-template";
-//        }
-//        return "redirect:/lectures?error=CourseNotFound";
-//    }
+
+    @PostMapping("/add")
+    public String saveQuiz(
+            @RequestParam(required = false) Long id,
+            @RequestParam String name) {
+        if (id != null) {
+            this.quizService.edit(id, name);
+        } else {
+            this.quizService.save(name);
+        }
+        return "redirect:/quizzes";
+    }
+
+    @GetMapping("/edit-form/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String editCoursePage(@PathVariable Long id, Model model) {
+        if (this.quizService.findById(id).isPresent()) {
+            Quiz quiz = this.quizService.findById(id).orElseThrow(QuizDoesNotExistException::new);
+            model.addAttribute("quiz", quiz);
+            model.addAttribute("bodyContent", "add-quiz");
+            return "master-template";
+        }
+        return "redirect:/quizzes?error=CourseNotFound";
+    }
 
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")

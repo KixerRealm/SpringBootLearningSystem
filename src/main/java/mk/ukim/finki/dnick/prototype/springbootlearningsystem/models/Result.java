@@ -1,17 +1,20 @@
 package mk.ukim.finki.dnick.prototype.springbootlearningsystem.models;
 
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Component
 @Entity
+@Data
 @Table(name = "results")
 public class Result {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue
+    private Long id;
     private String username;
     private int totalCorrect = 0;
 
@@ -19,18 +22,18 @@ public class Result {
         super();
     }
 
-    public Result(int id, String username, int totalCorrect) {
+    public Result(Long id, String username, int totalCorrect) {
         super();
         this.id = id;
         this.username = username;
         this.totalCorrect = totalCorrect;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -48,5 +51,18 @@ public class Result {
 
     public void setTotalCorrect(int totalCorrect) {
         this.totalCorrect = totalCorrect;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Result result = (Result) o;
+        return username.equals(result.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username);
     }
 }

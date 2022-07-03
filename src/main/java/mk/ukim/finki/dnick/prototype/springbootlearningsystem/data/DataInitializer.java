@@ -154,7 +154,14 @@ public class DataInitializer {
         Question question4 = new Question("How do you create a variable with the numeric value 5?", "num x = 5", "float x = 5", "int x = 5", 3, -1);
         this.questionRepository.save(question4);
 
-        this.quizService.save("Introduction to Java Quiz", question, question1, question2, question3, question4);
+        List<Question> questions = new ArrayList<>();
+        questions.add(question);
+        questions.add(question1);
+        questions.add(question2);
+        questions.add(question3);
+        questions.add(question4);
+
+        this.quizService.save("Introduction to Java Quiz");
     }
 
 
