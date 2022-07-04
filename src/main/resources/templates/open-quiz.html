@@ -1,6 +1,6 @@
 <script type="text/javascript">
   // Timer
-  var mins = 0.2;  //Set the number of minutes you need
+  var mins = 2;  //Set the number of minutes you need
   var secs = mins * 60;
   var currentSeconds = 0;
   var currentMinutes = 0;
@@ -20,12 +20,59 @@
     if(secs < 0) $("#submit").click()
   }
 </script>
-
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Web Programming Course</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<main>
+<header xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+  <nav class="navbar navbar-expand-md navbar-dark bg-success">
+    <div class="container">
+      <a class="navbar-brand" href="#">WEB PROGRAMMING COURSE</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+              aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="nav-item" sec:authorize="isAuthenticated()">
+            <a class="nav-link" href="#">
+              <th:block th:if="${#request.getRemoteUser() != null}"
+                        th:class="text-white" th:text="${#request.getRemoteUser()}"></th:block>
+            </a>
+          </li>
+          <li class="nav-item" sec:authorize="isAuthenticated()">
+            <a class="btn btn-light btn-sm ml-3" href="/logout">
+              <i class="fa fa-shopping-cart"></i> Logout
+            </a>
+          </li>
+          <li class="nav-item" sec:authorize="!isAuthenticated()">
+            <a class="btn btn-light btn-sm ml-3" href="/login">
+              <i class="fa fa-shopping-cart"></i> Login
+            </a>
+          </li>
+          <li class="nav-item" sec:authorize="!isAuthenticated()">
+            <a class="btn btn-light btn-sm ml-3" href="/register">
+              <i class="fa fa-shopping-cart"></i> Register
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
 <div class="container py-5 px-4">
   <h1 class="jumbotron-fluid">Only Select The Correct Answers</h1>
-  <div>Time remaining until you can complete this quiz: <strong><span id="time"></span></strong></div>
+  <div class="font-weight-bold">Time remaining until you can complete this quiz: <strong><span id="time"></span></strong></div><br/>
   <form action="/quizzes/submit" method="POST" th:object=${qForm}>
-    <div class="ques-box bg-success font-weight-bold" th:each="ques, i: ${qForm.questions}">
+    <div class="ques-box font-weight-bold border-dark" th:each="ques, i: ${qForm.questions}">
         <p class="title" th:text="${ques.questionText}"></p>
       <div class="option">
         <input type="radio" th:name="|questions[${i.index}].chose|" th:value="1" />
@@ -46,3 +93,37 @@
     <button id="submit" type="submit" class="btn btn-danger d-block mx-auto mt-4">Submit Answer</button>
   </form>
 </div>
+  <footer class="text-black-50 mt-xl-5 bg-success" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3 col-lg-4 col-xl-3 text-white">
+          <h5>About</h5>
+          <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
+          <p class="mb-0">
+            Spring Boot learning system meant for beginners.
+          </p>
+        </div>
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto text-white" sec:authorize="isAuthenticated()">
+          <h5>Assignments and lectures</h5>
+          <hr class="bg-white mb-2 mt-2 d-lg-block mx-auto w-25">
+          <ul class="list-unstyled">
+            <li>2nd May <a href="/lectures/view-lecture/1">Introduction to Java</a></li>
+            <li>5th May <a href="/lectures/view-lecture/2">OOP in Java</a></li>
+            <li>10th May <a href="/lectures/view-lecture/3">Introduction to Spring </a></li>
+            <li>11th May <a href="/lectures/view-lecture/4">Spring Beans</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 col-lg-3 col-xl-3 text-white">
+          <h5>Contact</h5>
+          <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
+          <ul class="list-unstyled">
+            <li><i class="fa fa-home mr-2"></i> FINKI </li>
+            <li><i class="fa fa-envelope mr-2"></i> kristijan.kostovski.1@students.finki.ukim.mk </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+</main>
+</body>
+</html>

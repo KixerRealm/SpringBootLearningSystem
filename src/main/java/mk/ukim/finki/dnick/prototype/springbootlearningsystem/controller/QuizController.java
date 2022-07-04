@@ -63,8 +63,7 @@ public class QuizController {
             result.setUsername(username);
         }
         model.addAttribute("qForm", qForm);
-        model.addAttribute("bodyContent","open-quiz");
-        return "master-template";
+        return "open-quiz";
     }
 
 

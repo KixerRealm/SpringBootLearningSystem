@@ -1,28 +1,50 @@
-<div class="container">
-    <h3 class="bg-success text-center">Your Score</h3> <br/>
-<div class="row">
-    <div class=" justify-content-center">
-      <p>Participant name:</p>
-      <p th:if="${result}" th:text="${result.username}"></p>
+<head></head>
+<style>
+    * {
+    }
+
+    body {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    .main-container {
+        display: block;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    img {
+        width: 100%;
+        max-width: 350px;
+        position: relative;
+        display: block;
+        margin: -180px auto 50px auto;
+    }
+
+    .card button {
+        width: 45%;
+    }
+</style>
+<div class="main-container container py-5 px-4">
+    <div class="bg-success text-light py-5 px-4 mx-auto">
+        <h3 class="bg-primary text-center">Your Score</h3>
+        <div class="text-center">
+            <h5>Participant name: </h5>
+            <h5 th:if="${result}" th:text="${result.username}"></h5>
+        </div>
+        <div class="text-center">
+            <h5>Total correct answers: <h5 th:if="${result}" th:text="${result.totalCorrect}"></h5></h5>
+        </div>
+        <div class="text-center">
+            <h5>Total false answers: </h5>
+            <h5 th:if="${result}" th:text="5 - ${result.totalCorrect}"></h5>
+        </div>
+        <div class="text-center mt-4">
+            <button type="button" th:onclick="window.location.href='/score'"
+                    class="btn btn-sm btn-info mx-auto">View Score Board</button>
+            <button type="button" th:onclick="window.location.href='/quizzes'"
+                    class="btn btn-sm btn-info mx-auto">Back to Quizzes</button>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class=" justify-content-center">
-      <p>Total correct answers:<p th:if="${result}" th:text="${result.totalCorrect}"></p></p>
-    </div>
-</div>
-<div class="row">
-    <div class=" justify-content-center">
-      <p>Total false answers:</p>
-      <p th:if="${result}" th:text="5 - ${result.totalCorrect}"></p>
-    </div>
-</div>
-<div class="row">
-    <div class="justify-content-center mt-4">
-      <button type="button" th:onclick="window.location.href='/score'"
-              class="btn btn-primary">View Score Board</button>
-      <button type="button" th:onclick="window.location.href='/quizzes'"
-              class="btn btn-primary">Back to Quizzes</button>
-    </div>
-</div>
 </div>
