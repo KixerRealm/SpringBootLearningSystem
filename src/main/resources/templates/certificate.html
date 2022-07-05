@@ -1,0 +1,50 @@
+<head></head>
+<style>
+    * {
+    }
+
+    body {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    .main-container {
+        display: block;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .card button {
+        width: 45%;
+    }
+</style>
+<script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+<script>
+    function generatePDF(){
+        const element = document.getElementById("invoice");
+
+        html2pdf().from(element).save();
+    }
+</script>
+<div id="invoice" class="main-container container py-4 px-3">
+    <div class="bg-success text-light py-5 px-4 mx-auto">
+        <h3 class="bg-primary text-center">Spring Boot Certificate</h3>
+        <img src="/images/Spring-BOOT-Interview-questions-1.jpg" style="width: 400px;height: 200px; margin-left: 200px;
+    ">
+        <div class="text-center">
+            <h5>Participant name: </h5>
+            <h5 th:if="${result}" th:text="${result.username}"></h5>
+        </div>
+        <div class="text-center">
+            <h5>Course finished: Spring Boot Course</h5>
+        </div>
+    </div>
+</div>
+<div class="text-center mt-4">
+    <button type="button" th:onclick="window.location.href='/final-test'"
+            class="btn btn-sm btn-info mx-auto">Back to Final Test</button>
+    <button type="button" onclick="generatePDF()"
+            class="btn btn-sm btn-info mx-auto">Download certificate</button>
+</div>
+
+

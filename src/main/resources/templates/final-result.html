@@ -1,0 +1,52 @@
+<head></head>
+<style>
+  * {
+  }
+
+  body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .main-container {
+    display: block;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  img {
+    width: 100%;
+    max-width: 350px;
+    position: relative;
+    display: block;
+    margin: -180px auto 50px auto;
+  }
+
+  .card button {
+    width: 45%;
+  }
+</style>
+<div class="main-container container py-5 px-4">
+  <div class="bg-success text-light py-5 px-4 mx-auto">
+    <h3 class="bg-primary text-center">Your Score</h3>
+    <div class="text-center">
+      <h5>Participant name: </h5>
+      <h5 th:if="${result}" th:text="${result.username}"></h5>
+    </div>
+    <div class="text-center">
+      <h5>Total correct answers: <h5 th:if="${result}" th:text="${result.totalCorrect}"></h5></h5>
+    </div>
+    <div class="text-center">
+      <h5>Total false answers: </h5>
+      <h5 th:if="${result}" th:text="15 - ${result.totalCorrect}"></h5>
+    </div>
+    <div class="text-center mt-4">
+      <button type="button" th:onclick="window.location.href='/final-test'"
+              class="btn btn-sm btn-info mx-auto">Back to Final Test</button>
+      <button th:if="${result.totalCorrect>=8}" type="button" th:onclick="window.location.href='/final-test/certificate'"
+              class="btn btn-sm btn-info mx-auto">Open certificate</button>
+    </div>
+  </div>
+</div>
+
+

@@ -82,6 +82,23 @@ public Optional<Quiz> save(String quizText) {
         return qForm;
     }
 
+    public QuestionForm getTestQuestions() {
+        List<Question> allQues = questionRepository.findAll();
+        List<Question> qList = new ArrayList<Question>();
+
+        Random random = new Random();
+
+        for(int i=0; i<15; i++) {
+            int rand = random.nextInt(allQues.size());
+            qList.add(allQues.get(rand));
+            allQues.remove(rand);
+        }
+
+        qForm.setQuestions(qList);
+
+        return qForm;
+    }
+
     public int getResult(QuestionForm qForm) {
         int correct = 0;
 

@@ -15,12 +15,12 @@
     <img th:if="${course.getName().contains('Spring Factory')}" src="/images/spring-bean-factory.jpg" class="card-img-top" style="width: 720px; height: 480px"><br/>
     <img th:if="${course.getName().contains('Introduction to Spring')}" src="/images/spring-example-architecture-guide-1.jpg" class="card-img-top" style="width: 720px; height: 480px"><br/>
     <img th:if="${course.getName().contains('Beans')}" src="/images/Spring-Bean.PNG" class="card-img-top" style="width: 720px; height: 480px"><br/>
-    <a type="button" class="btn btn-primary" href="/lectures">Back to lectures</a>
-    <a type="button" class="btn btn-primary" href="#">Join lecture</a>
-    <a type="button" class="btn btn-primary" href="#">Open lecture recording</a>
+    <a type="button" class="btn btn-sm btn-info" href="/lectures">Back to lectures</a>
+    <a type="button" class="btn btn-sm btn-info" href="#">Join lecture</a>
+    <a type="button" class="btn btn-sm btn-info" href="#">Open lecture recording</a>
     <br/>
     <div th:each="quiz : ${quizzes}">
-      <a  type="button" class="btn btn-primary" th:if="${quiz.getQuizName().contains(course.getName())}" th:href="@{'/quizzes/open-quiz/{id}' (id=${quiz.getId()})}">
+      <a  type="button" class="btn btn-sm btn-info" th:if="${quiz.getQuizName().contains(course.getName())}" th:href="@{'/quizzes/open-quiz/{id}' (id=${quiz.getId()})}">
         Open lecture quiz</a>
     </div>
   </div>

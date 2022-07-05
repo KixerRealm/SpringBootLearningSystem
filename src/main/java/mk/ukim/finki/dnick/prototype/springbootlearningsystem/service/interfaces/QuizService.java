@@ -25,4 +25,6 @@ public interface QuizService {
     int getResult(QuestionForm qForm);
 
     QuestionForm getQuestions();
+
+    QuestionForm getTestQuestions();
 }

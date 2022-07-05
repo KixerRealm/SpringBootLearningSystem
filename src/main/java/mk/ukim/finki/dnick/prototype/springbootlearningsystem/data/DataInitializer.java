@@ -1,8 +1,10 @@
 package mk.ukim.finki.dnick.prototype.springbootlearningsystem.data;
 
 import lombok.Getter;
+import mk.ukim.finki.dnick.prototype.springbootlearningsystem.models.FinalTest;
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.models.Question;
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.models.enumerations.Role;
+import mk.ukim.finki.dnick.prototype.springbootlearningsystem.repository.FinalTestRepository;
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.repository.QuestionRepository;
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.service.interfaces.CourseService;
 import mk.ukim.finki.dnick.prototype.springbootlearningsystem.service.interfaces.QuizService;
@@ -10,8 +12,6 @@ import mk.ukim.finki.dnick.prototype.springbootlearningsystem.service.interfaces
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 @Getter
@@ -22,12 +22,15 @@ public class DataInitializer {
     public QuizService quizService;
     public QuestionRepository questionRepository;
 
+    public FinalTestRepository finalTestRepository;
+
     public DataInitializer(CourseService courseService, UserService userService,
-                           QuizService quizService, QuestionRepository questionRepository) {
+                           QuizService quizService, QuestionRepository questionRepository, FinalTestRepository finalTestRepository) {
         this.userService = userService;
         this.courseService = courseService;
         this.quizService = quizService;
         this.questionRepository = questionRepository;
+        this.finalTestRepository = finalTestRepository;
     }
 
     @PostConstruct
@@ -153,15 +156,56 @@ public class DataInitializer {
         this.questionRepository.save(question3);
         Question question4 = new Question("How do you create a variable with the numeric value 5?", "num x = 5", "float x = 5", "int x = 5", 3, -1);
         this.questionRepository.save(question4);
-
-        List<Question> questions = new ArrayList<>();
-        questions.add(question);
-        questions.add(question1);
-        questions.add(question2);
-        questions.add(question3);
-        questions.add(question4);
+        Question question5 = new Question("In OO, the concept of IS-A is based on", "Class inheritance","Intefrace implementation","Both",3, -1);
+        this.questionRepository.save(question5);
+        Question question6 = new Question("Method overloading is done during _______.", "Dynamic binding", "Program compilation","Runtime", 2,-1);
+        this.questionRepository.save(question6);
+        Question question7 = new Question("The relation between Car and Owner or BankAccount and Customer is example for", "Association", "Aggregation", "None",1,-1);
+        this.questionRepository.save(question7);
+        Question question8 = new Question("Polymorphism is one interface with __________.", "Multiple methods", "Single record", "Single method",1,-1);
+        this.questionRepository.save(question8);
+        Question question9 = new Question("At run-time, a Java program is nothing more than objects 'talking' to ___________.","Other classes","Other objects","Other binders",2,-1);
+        this.questionRepository.save(question9);
+        Question question10 = new Question("Ad hoc polymorphism is ____________.", "Dynamic binding", "Method Overloading", "Method Overriding",2,-1);
+        this.questionRepository.save(question10);
+        Question question11 = new Question("Which are the modules of Data Access/ integration layer?","JDBC, ORM, OXM, JMS, Transactions","JDBC, ORM, OXM, JMS", "JDBC, ORM, Web, Beans",1,-1);
+        this.questionRepository.save(question11);
+        Question question12 = new Question("Which of the following database is not supported using jdbcTemplate?","Oracle", "MySql", "NoSql",3,-1);
+        this.questionRepository.save(question12);
+        Question question13 = new Question("What BeanPostProcessor does?","It processes beans once a bean exits.", "It defines callback methods that you can implement to provide your own instantiation logic, dependency-resolution logic ect.", "It processes beans once a bean is loaded", 2, -1);
+        this.questionRepository.save(question13);
+        Question question14 = new Question("What is Join point?", "This represents a point in your object where you join values.", "This represents a point in your object where you join injected values.", "This represents a point in your application where you can plug-in AOP aspect.", 3, -1 );
+        this.questionRepository.save(question14);
+        Question question15 = new Question("What is the scope of stateless bean?", "global-session", "singleton", "request", 2, -1);
+        this.questionRepository.save(question15);
+        Question question16 = new Question("What is true about collection configuration elements?", "This helps in wiring a list of values but without any duplicates.", "This can be used to inject a collection of name-value pairs where name and value can be of any type.", "This can be used to inject a collection of name-value pairs where the name and value are both Strings.", 3, -1);
+        this.questionRepository.save(question16);
+        Question question17 = new Question("What is singleton scope?", "This scopes the bean definition to a single instance per HTTP Session.", "This scopes the bean definition to a single instance per HTTP Request.", "This scopes the bean definition to a single instance per Spring IoC container.", 3, -1);
+        this.questionRepository.save(question17);
+        Question question18 = new Question("Spring is .. .", "a free framework", "a licensed framework", "an open source framework", 3, -1);
+        this.questionRepository.save(question18);
+        Question question19 = new Question("Which exception class is related to all the exceptions that are thrown in spring applications?", "ArrayIndexOutofBound", "DataAccessException", "NullPointerException", 2,-1);
+        this.questionRepository.save(question19);
+        Question question20 = new Question("Beans defined in spring framework are by default ..", "Final", "Singleton", "Abstract", 2, -1);
+        this.questionRepository.save(question20);
+        Question question21 = new Question("What are different types of Bean Injections?", "constructor and setter", "constructor and getter", "getter and setter",1 ,-1);
+        this.questionRepository.save(question21);
+        Question question22 = new Question("Which of the following is true?", "BeanFactory implements ApplicationContext", "BeanFactory extends ApplicationContext", "ApplicationContext extends BeanFactory",3,-1);
+        this.questionRepository.save(question22);
+        Question question23 = new Question("IOC or Dependenct injection is a ..", "Java Module", "Framework", "Design Pattern", 3, -1);
+        this.questionRepository.save(question23);
+        Question question24 = new Question("Which are different points where weaving can be applied?", "Compile Time , Classload Time , Runtime", "Compile Time and Runtime", "Compile Time , Classload Time , load time", 1, -1);
+        this.questionRepository.save(question24);
 
         this.quizService.save("Introduction to Java Quiz");
+        this.quizService.save("OOP Quiz");
+        this.quizService.save("Introduction to Spring Quiz");
+        this.quizService.save("Spring Beans Quiz");
+        this.quizService.save("Spring Factory Quiz");
+
+        FinalTest finalTest = new FinalTest("Final Test");
+
+        this.finalTestRepository.save(finalTest);
     }
 
 
